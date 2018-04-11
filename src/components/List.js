@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { loadPokemons } from '../api/actions';
 
 class List extends Component {
@@ -13,7 +14,12 @@ class List extends Component {
         {this.props.pokemons.length ?
 
         <ul>
-          {this.props.pokemons.map((pokemon, index) => (<li key={index}>{pokemon.name}</li>))}
+          {this.props.pokemons.map((pokemon, index) => (
+            <li key={index}>
+              <p>{pokemon.name}</p>
+              <p><Link to={`/pokemons/${pokemon.id}`}>Ver detalhes</Link></p>
+            </li>
+          ))}
         </ul> :
 
         <p>Carregando pokemons...</p>}

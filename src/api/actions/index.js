@@ -36,4 +36,6 @@ export const detail = {
 
 export const updateNavigation = payload => action(UPDATE_NAVIGATION, { payload })
 export const loadPokemons = () => action(LOAD_POKEMON_LIST)
-export const loadPokemonDetail = id => action(LOAD_POKEMON_DETAIL, { id })
+export const loadPokemonDetail = id => {
+  return action(LOAD_POKEMON_DETAIL, { payload: id });
+}

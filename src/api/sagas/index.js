@@ -1,20 +1,26 @@
-import { take, put, call, fork, takeEvery, all } from 'redux-saga/effects'
-import * as actions from '../actions'
-import { fetchPokemons } from '../services'
+import { take, put, call, fork, takeEvery, all, select } from 'redux-saga/effects';
+import * as actions from '../actions';
+import { fetchPokemons } from '../services';
+
+function handlePokemonResponse(items){
+  items.forEach(item => item.id = RegExp(/pokemon\/([0-9]+)/).exec(item.url)[1]);
+  return items;
+}
 
 export function* getPokemons() {
     try {
       let { results, count, previous, next } = yield call(fetchPokemons);
-      yield put(actions.pokemons.success(results))
+      let pokemons = handlePokemonResponse(results);
+      yield put(actions.pokemons.success(pokemons))
       yield put(actions.updateNavigation({ count, previous, next }))
     } catch(error) {
       yield put(actions.pokemons.failure(error))
     }
 }
 
-export function* getDetail() {
+export function* getDetail({ payload }) {
     try {
-      let detail = yield call(fetchPokemons);
+      let detail = yield call(fetchPokemons, payload);
       yield put(actions.detail.success(detail))
     } catch(error) {
       yield put(actions.detail.failure(error))
