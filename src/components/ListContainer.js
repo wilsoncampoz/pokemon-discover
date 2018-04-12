@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import '../styles/ListContainer.sass';
+
 const pokemonItem = pokemon => (
-  <li>
+  <div className="container-item">
     <p>{pokemon.name}</p>
-    <p><Link to={`/pokemons/detail/${pokemon.id}`}>Ver detalhes</Link></p>
-  </li>
+    <Link to={`/pokemons/detail/${pokemon.id}`}><button className="button">Ver detalhes</button></Link>
+  </div>
 );
 
 class ListContainer extends Component {
   render(){
     return (
-      <ul>
+      <div className="container">
         {this.props.pokemons.map(pokemon => pokemonItem(pokemon))}
-      </ul>
+      </div>
     );
   }
 }

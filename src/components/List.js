@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Navigation from './Navigation';
 import ListContainer from './ListContainer';
+import Loader from './Loader';
 import { pokemons } from '../api/actions';
 
 class List extends Component {
@@ -33,7 +34,7 @@ class List extends Component {
           <Navigation navigation={navigation} />          
         </div> :
 
-        <p>Carregando pokemons...</p>}        
+        <Loader />}        
       </div>
     );
   }
