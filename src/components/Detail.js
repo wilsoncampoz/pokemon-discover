@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { detail } from '../api/actions';
 import Loader from './Loader';
 
+const style = { "margin-top": "30px" };
+
 class List extends Component {
   componentDidMount(){
     this.props.loadDetail(this.props.params.id);
@@ -13,18 +15,15 @@ class List extends Component {
     let { detail } = this.props;
 
     return (
-      <div>
+      <div style={style}>
         {detail ?
 
           <div>
-            <img align="center" alt={detail.name} src={detail.sprites.front_default} />
-
-            <ul>            
-              <li>Nome: {detail.name}</li>
-              <li>Peso: {detail.weight}</li>
-              <li>Altura: {detail.height}</li>
-              <li>Habilidades: {detail.abilities.map(ability => (ability.ability.name + ', '))}</li>
-            </ul>
+            <img align="center" alt={detail.name} src={detail.sprites.front_default} />                        
+            <p>Nome: {detail.name}</p>
+            <p>Peso: {detail.weight}</p>
+            <p>Altura: {detail.height}</p>
+            <p>Habilidades: {detail.abilities.map(ability => (ability.ability.name + ', '))}</p>            
           </div> :
 
           <Loader />}

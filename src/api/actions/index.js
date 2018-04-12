@@ -13,6 +13,7 @@ function createRequestTypes(base) {
 export const POKEMON_LIST = createRequestTypes('POKEMON_LIST');
 export const POKEMON_DETAIL = createRequestTypes('POKEMON_DETAIL');
 export const UPDATE_NAVIGATION =  'UPDATE_NAVIGATION';
+export const UPDATE_ITEMS_PER_PAGE =  'UPDATE_ITEMS_PER_PAGE';
 
 function action(type, payload = {}) {
   return { type, ...payload }
