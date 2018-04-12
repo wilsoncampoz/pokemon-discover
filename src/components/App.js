@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Route, Link, Redirect } from 'react-router-dom';
-import { Button, Colors } from 'react-foundation';
 
 import List from './List';
 import Detail from './Detail';
