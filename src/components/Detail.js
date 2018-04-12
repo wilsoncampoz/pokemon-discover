@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { loadPokemonDetail } from '../api/actions';
+
+import { detail } from '../api/actions';
 
 class List extends Component {
   componentDidMount(){
-    this.props.loadPokemonDetail(this.props.params.id);
+    this.props.loadDetail(this.props.params.id);
   }
 
   render() {
@@ -14,11 +14,16 @@ class List extends Component {
     return (
       <div>
         {detail ?
+
           <div>
-            Nome: {detail.name}
-            Peso: {detail.weight}
-            Altura: {detail.height}
-            Habilidades: {detail.abilities.map(ability => (<p>{ability.ability.name}</p>))}
+            <img align="center" alt={detail.name} src={detail.sprites.front_default} />
+
+            <ul>            
+              <li>Nome: {detail.name}</li>
+              <li>Peso: {detail.weight}</li>
+              <li>Altura: {detail.height}</li>
+              <li>Habilidades: {detail.abilities.map(ability => (ability.ability.name + ', '))}</li>
+            </ul>
           </div> :
 
           <p>Carregando...</p>
@@ -28,11 +33,6 @@ class List extends Component {
   }
 }
 
-const mapStateToProps = (state, { match }) => ({ 
-  detail: state.detail,
-  params: match.params
-})
+const mapStateToProps = (state, { match: { params }}) => ({ detail: state.detail, params });
 
-export default connect(mapStateToProps, { 
-  loadPokemonDetail 
-})(List);
+export default connect(mapStateToProps, { loadDetail: detail.request })(List);

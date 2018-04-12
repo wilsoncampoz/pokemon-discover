@@ -1,16 +1,32 @@
-import { take, put, call, fork, takeEvery, all, select } from 'redux-saga/effects';
+import { put, call, fork, takeEvery, all } from 'redux-saga/effects';
+
 import * as actions from '../actions';
 import { fetchPokemons } from '../services';
 
-function handlePokemonResponse(items){
+function handlePokemonsResponse(items){
   items.forEach(item => item.id = RegExp(/pokemon\/([0-9]+)/).exec(item.url)[1]);
   return items;
 }
 
-export function* getPokemons() {
+function getParam(param){
+  let key = param.split("=")[0];
+  let value = param.split("=")[1];
+  return { [key]: value };
+}
+
+function getPaginationContext(url){
+  let params = url && url.split('?')[1];
+  return params && params.split("&").reduce((obj, param) => Object.assign(obj, getParam(param)), {});
+}
+
+export function* getPokemons({ payload }) {
     try {
-      let { results, count, previous, next } = yield call(fetchPokemons);
-      let pokemons = handlePokemonResponse(results);
+      let { results, count, previous, next } = yield call(fetchPokemons, payload);
+      let pokemons = handlePokemonsResponse(results);
+      
+      previous = getPaginationContext(previous);
+      next = getPaginationContext(next);
+      
       yield put(actions.pokemons.success(pokemons))
       yield put(actions.updateNavigation({ count, previous, next }))
     } catch(error) {
@@ -28,30 +44,16 @@ export function* getDetail({ payload }) {
 }
 
 export function* watchGetPokemons() {
-  while(true) {
-    yield take(actions.LOAD_POKEMON_LIST)
-    /*
-      ***THIS IS A BLOCKING CALL***
-      It means that watchCheckout will ignore any CHECKOUT_REQUEST event until
-      the current checkout completes, either by success or by Error.
-      i.e. concurrent CHECKOUT_REQUEST are not allowed
-      TODO: This needs to be enforced by the UI (disable checkout button)
-    */
-    yield call(getPokemons)
-  }
+  yield takeEvery(actions.POKEMON_LIST.REQUEST, getPokemons);
 }
 
 export function* watchGetDetail() {
-  /*
-    takeEvery will fork a new `getAllProducts` task on each GET_ALL_PRODUCTS actions
-    i.e. concurrent GET_ALL_PRODUCTS actions are allowed
-  */
-  yield takeEvery(actions.LOAD_POKEMON_DETAIL, getDetail)
+  yield takeEvery(actions.POKEMON_DETAIL.REQUEST, getDetail);
 }
 
 export default function* root() {
   yield all([
     fork(watchGetPokemons),
     fork(watchGetDetail)
-  ])
+  ]);
 }

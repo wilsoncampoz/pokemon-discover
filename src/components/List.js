@@ -1,39 +1,44 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { loadPokemons } from '../api/actions';
+
+import Navigation from './Navigation';
+import ListContainer from './ListContainer';
+import { pokemons } from '../api/actions';
 
 class List extends Component {
   componentDidMount(){
-    this.props.loadPokemons();
+    this.loadPokemons();
+  }
+
+  componentWillReceiveProps(newProps){
+    newProps.match.url !== this.props.match.url && this.loadPokemons(newProps);
+  }
+
+  loadPokemons(props = this.props){
+    let { match : { params } } = props;
+    let paramKeys = Object.keys(params);
+    let queryParams = paramKeys && paramKeys.reduce((str, key) => str += `${key}=${params[key].split(key+':')[1]}&`, '?');
+    this.props.loadPokemons(queryParams);
   }
 
   render() {
+    let { pokemons, navigation } = this.props;
+
     return (
       <div>
-        {this.props.pokemons.length ?
+        {pokemons.length ?
 
-        <ul>
-          {this.props.pokemons.map((pokemon, index) => (
-            <li key={index}>
-              <p>{pokemon.name}</p>
-              <p><Link to={`/pokemons/${pokemon.id}`}>Ver detalhes</Link></p>
-            </li>
-          ))}
-        </ul> :
+        <div className="list-container">
+          <ListContainer pokemons={pokemons} />
+          <Navigation navigation={navigation} />          
+        </div> :
 
-        <p>Carregando pokemons...</p>}
-        
+        <p>Carregando pokemons...</p>}        
       </div>
     );
   }
-}
+};
 
-const mapStateToProps = state => ({ 
-  pokemons: state.pokemons, 
-  navigation: state.navigation 
-});
+const mapStateToProps = (state, ownProps) => ({ pokemons: state.pokemons, navigation: state.navigation });
 
-export default connect(mapStateToProps, { 
-  loadPokemons 
-})(List);
+export default connect(mapStateToProps, { loadPokemons: pokemons.request })(List);

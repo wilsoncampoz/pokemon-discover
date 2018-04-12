@@ -10,10 +10,7 @@
     "react-route": "^1.0.3",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.9",
     "redux": "^3.6.0",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-immutable": "^4.0.0",
     "redux-saga": "^0.16.0"
   },
   "scripts": {
@@ -21,5 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "jest-cli": "20.0.4"
   }
 }
