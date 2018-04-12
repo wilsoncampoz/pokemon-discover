@@ -24,6 +24,7 @@
     "eslint-plugin-react": "7.4.0",
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
+    "foundation-sites": "^6.4.4-rc1",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
@@ -35,6 +36,7 @@
     "react": "^16.3.1",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.3.1",
+    "react-foundation": "^0.9.4",
     "react-redux": "^5.0.6",
     "react-route": "^1.0.3",
     "react-router": "^4.2.0",
@@ -56,7 +58,9 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
-    "jest-cli": "20.0.4"
+    "jest-cli": "20.0.4",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7"
   },
   "jest": {
     "collectCoverageFrom": [
