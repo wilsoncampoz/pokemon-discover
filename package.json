@@ -50,7 +50,9 @@
     "webpack": "3.8.1",
     "webpack-dev-server": "2.9.4",
     "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
+    "whatwg-fetch": "2.0.3",
+    "node-sass": "^4.8.3",
+    "sass-loader": "^6.0.7"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -58,9 +60,7 @@
     "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
-    "jest-cli": "20.0.4",
-    "node-sass": "^4.8.3",
-    "sass-loader": "^6.0.7"
+    "jest-cli": "20.0.4"
   },
   "jest": {
     "collectCoverageFrom": [

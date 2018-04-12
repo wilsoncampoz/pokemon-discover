@@ -153,6 +153,25 @@ module.exports = {
               compact: true,
             },
           },
+          {
+            test: /\.sass$/,
+            include: paths.appSrc,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  importLoaders: 1,
+                },
+              },
+              {
+                loader: 'sass-loader',
+                options: {
+                  includePaths: ['../node_modules/foundation-sites/scss']
+                } 
+              }
+            ]
+          },   
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
