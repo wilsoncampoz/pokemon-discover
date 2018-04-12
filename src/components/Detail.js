@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { detail } from '../api/actions';
+import Loader from './Loader';
 
 class List extends Component {
   componentDidMount(){
@@ -26,8 +27,7 @@ class List extends Component {
             </ul>
           </div> :
 
-          <p>Carregando...</p>
-      }
+          <Loader />}
       </div>
     );
   }

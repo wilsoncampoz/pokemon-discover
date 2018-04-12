@@ -5,6 +5,7 @@ class Loader extends Component {
   render(){
     return (
       <div class="spinner">
+        <p>Carregando</p>        
         <div class="bounce1"></div>
         <div class="bounce2"></div>
         <div class="bounce3"></div>
