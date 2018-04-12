@@ -2,6 +2,8 @@
 
 Esse projeto foi criado utilizando react-create-app.
 
+##### (React + Router + Redux + Saga)
+
 ##### Demo: [pokemon-discover.herokuapp](https://pokemon-discover.herokuapp.com/pokemons)
 
 ---  
